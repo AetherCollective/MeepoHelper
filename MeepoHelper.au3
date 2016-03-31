@@ -4,6 +4,8 @@
 #AutoIt3Wrapper_UseUpx=y
 #AutoIt3Wrapper_Res_Fileversion=1.0.0.0
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
+#include "Misc.au3"
+_Singleton("MeepoHelper")
 Opt("SendKeyDownDelay", 5)
 Opt("SendKeyDelay", 5)
 ProcessSetPriority("MeepoHelper.exe", 5)
