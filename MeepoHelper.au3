@@ -1,6 +1,7 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=meepo.ico
 #AutoIt3Wrapper_Compression=4
+#AutoIt3Wrapper_UseUpx=y
 #AutoIt3Wrapper_Res_Fileversion=1.0.0.0
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 Opt("SendKeyDownDelay", 5)
@@ -24,7 +25,7 @@ Global $PoofAllKey = IniRead("MeepoHelper.ini", "MeepoHelper", "PoofAllkey", "6"
 Global $NumberofMeeposSetKey = IniRead("MeepoHelper.ini", "MeepoHelper", "NumberofMeeposSetAndCheckKey", "9")
 Global $NumberofMeeposCheckKey = IniRead("MeepoHelper.ini", "MeepoHelper", "NumberofMeeposCheckKey", "0")
 Global $ChatKey = IniRead("MeepoHelper.ini", "MeepoHelper", "ChatKey", "!{f11}")
-Global $safety = IniRead("MeepoHelper.ini", "MeepoHelper", "Safety", True) ;Safety allows blinkpoof to become more reliable. In order to do this, user input is disabled for roughtly 300ms during the blinkpoof.
+Global $safety = IniRead("MeepoHelper.ini", "MeepoHelper", "Safety", True)
 Global $auto
 HotKeySet($blinkPoofKey, "BlinkPoof")
 HotKeySet($PoofAllKey, "PoofAll")
@@ -41,8 +42,8 @@ EndFunc   ;==>standby
 Func Setup()
 	Global $iHandle = FileOpen("MeepoHelper.ini", 2)
 	FileWriteLine("MeepoHelper.ini", "[MeepoHelper]")
-	FileWriteLine("MeepoHelper.ini", "BlinkPoofKey			=5")
-	FileWriteLine("MeepoHelper.ini", "PoofAllKey			=6")
+	FileWriteLine("MeepoHelper.ini", "BlinkPoofKey			=2")
+	FileWriteLine("MeepoHelper.ini", "PoofAllKey			=1")
 	FileWriteLine("MeepoHelper.ini", "NumberofMeeposSetAndCheckKey	=9")
 	FileWriteLine("MeepoHelper.ini", "NumberofMeeposCheckKey		=0")
 	FileWriteLine("MeepoHelper.ini", "ChatKey				=!{f11}")
@@ -54,19 +55,20 @@ Func Setup()
 	FileWriteLine("MeepoHelper.ini", "BlinkQuickCastKey		=x")
 	FileWriteLine("MeepoHelper.ini", "VeilOfDiscordQuickCastKey	=c")
 	FileWriteLine("MeepoHelper.ini", "PoofQuickCastKey		=2")
+	FileWriteLine("MeepoHelper.ini", "Safety				=True")
 	FileWriteLine("MeepoHelper.ini", " ")
 	FileWriteLine("MeepoHelper.ini", "[Notes]")
 	FileWriteLine("MeepoHelper.ini", 'Instructions="Read Readme.txt"')
 	FileWriteLine("MeepoHelper.ini", 'Notes="Do not use Multiple Keys as a keybind(with the exception of Chatkey)"')
 	FileWriteLine("MeepoHelper.ini", 'Buttons="All buttons can be found here https://www.autoitscript.com/autoit3/docs/functions/Send.htm "')
-	MsgBox(0, "MeepoHelper", "Default Settings Loaded at MeepoHelper.ini. Please Configure your keybinds on the next pages.")
-	InputBox("MeepoHelper", "Go to the link below to see what keybinds you can use. DO NOT USE multiple keys as keybind (such as alt+f4, or !{f4}). Also, never reuse a keybind that is already bound to this script or Dota unless specified.", "https://www.autoitscript.com/autoit3/docs/functions/Send.htm")
-	Global $blinkPoofKey = IniRead("MeepoHelper.ini", "MeepoHelper", "BlinkPoofKey", InputBox("MeepoHelper Keybind Config", "Please Set the Keybind for EasyBlinkPoof."))
-	IniWrite("MeepoHelper.ini", "MeepoHelper", "PoofAllkey", InputBox("MeepoHelper Keybind Config", "Please Set the Keybind for BlinkPoofAll."))
-	IniWrite("MeepoHelper.ini", "MeepoHelper", "NumberofMeeposSetAndCheckKey", InputBox("MeepoHelper Keybind Config", "Please Set the Keybind for Setting the number of meepos to be used during EasyBlinkPoof. (Great for leaving a meepo to poof to at base, tho you will have to manually unselect him after the poof)"))
+	MsgBox(64, "MeepoHelper", "Default Settings Loaded at MeepoHelper.ini. Please Configure your keybinds on the next pages.")
+	InputBox("Instructions", "Go to the link below to see what keybinds you can use. DO NOT USE multiple keys as keybind (such as alt+f4, or !{f4}). Also, never reuse a keybind that is already bound to this script or Dota unless specified.", "https://www.autoitscript.com/autoit3/docs/functions/Send.htm")
+	IniWrite("MeepoHelper.ini", "MeepoHelper", "BlinkPoofKey", InputBox("MeepoHelper Keybind Config", "Please Set the Keybind for EasyBlinkPoof.",""," M"))
+	IniWrite("MeepoHelper.ini", "MeepoHelper", "PoofAllkey", InputBox("MeepoHelper Keybind Config", "Please Set the Keybind for BlinkPoofAll.",""," M"))
+	IniWrite("MeepoHelper.ini", "MeepoHelper", "NumberofMeeposSetAndCheckKey", InputBox("MeepoHelper Keybind Config", "Please Set the Keybind for Setting the number of meepos to be used during EasyBlinkPoof. (Great for leaving a meepo to poof to at base, tho you will have to manually unselect him after the poof)",""," M"))
 	IniWrite("MeepoHelper.ini", "MeepoHelper", "NumberofMeeposCheckKey", InputBox("MeepoHelper Keybind Config", "Please Set the Keybind for Checking the number of meepos to be used during EasyBlinkPoof."))
 	IniWrite("MeepoHelper.ini", "MeepoHelper", "ChatKey", InputBox("MeepoHelper Keybind Config", "Please Set the Keybind to toggle the script's pause funtion. You will need to press this everytime you need to press a key and dont want the script to perform the keybound action while trying to chat. This is also the only keybind that supports multiple keys as a keybind"))
-	MsgBox(0, "Meepohelper Keybind Config", "From this point forward, you will need to match your keybinds to what is set in Dota 2.")
+	MsgBox(0, "Instructions", "From this point forward, you will need to match your keybinds to what is set in Dota 2.")
 	IniWrite("MeepoHelper.ini", "Dota2Bindings", "SelectHeroKey", InputBox("MeepoHelper Keybind Config", "What is Select Hero currently bound to?"))
 	IniWrite("MeepoHelper.ini", "Dota2Bindings", "SelectAllOtherUnitsKey", InputBox("MeepoHelper Keybind Config", "What is Select All Other Units currently bound to?"))
 	IniWrite("MeepoHelper.ini", "Dota2Bindings", "SelectAllUnitsKey", InputBox("MeepoHelper Keybind Config", "What is Select All Units currently bound to?"))
@@ -74,7 +76,7 @@ Func Setup()
 	IniWrite("MeepoHelper.ini", "Dota2Bindings", "BlinkQuickCastKey", InputBox("MeepoHelper Keybind Config", "What is Blink QuickCast currently bound to? (Must be QuickCast)(Determine what key you always put blink on and set it to this key.)"))
 	IniWrite("MeepoHelper.ini", "Dota2Bindings", "VeilOfDiscordQuickCastKey", InputBox("MeepoHelper Keybind Config", "What is Veil of Discord QuickCast currently bound to? (Must be QuickCast)(Determine what key you always put Veil of Discord on and set it to this key.)(Must be set, If you dont use veils, then put agh sceptor in this slot)"))
 	IniWrite("MeepoHelper.ini", "Dota2Bindings", "PoofQuickCastKey", InputBox("MeepoHelper Keybind Config", "What is Poof QuickCast currently bound to? (Must be QuickCast)"))
-	IniWrite("MeepoHelper.ini", "Dota2Bindings", "PoofQuickCastKey", True)
+	IniWrite("MeepoHelper.ini", "Dota2Bindings", "Safety", True)
 	FileClose($iHandle)
 	MsgBox(0, "MeepoHelper Keybind Config", "Settings Saved. Please Relaunch MeepoHelper.exe")
 	Exit
