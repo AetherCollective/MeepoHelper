@@ -78,6 +78,7 @@ Func Setup()
 	IniWrite("MeepoHelper.ini", "Dota2Bindings", "Safety", $SafetyFlag)
 EndFunc   ;==>Setup
 Func BlinkPoof()
+	HotkeysOff()
 	If $NumberOfMeepos = 1 Then standby()
 	If $Safety = True Then BlockInput(1)
 	Send("{esc}")
@@ -96,12 +97,15 @@ Func BlinkPoof()
 	Sleep(300)
 	If $Safety = True Then BlockInput(0)
 	Send($SelectAllUnitsKey)
+	HotkeysOn()
 EndFunc   ;==>BlinkPoof
 Func Poof()
+	HotkeysOff()
 	For $i = 1 To $NumberOfMeepos
 		Send($PoofQuickCastKey)
 		Send($ControlGroupTabKey)
 	Next
+	HotkeysOn()
 EndFunc   ;==>Poof
 Func NumberOfMeeposSet()
 	$NumberOfMeepos += 1
