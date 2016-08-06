@@ -11,7 +11,7 @@ Opt("SendKeyDelay", 5)
 ProcessSetPriority("MeepoHelper.exe", 5)
 ProcessSetPriority("AutoIt3.exe", 5)
 ProcessSetPriority("AutoIt3_x64.exe", 5)
-ProcessSetPriority("dota2.exe", 3)
+ProcessSetPriority("dota2.exe", 2)
 FileChangeDir(@ScriptDir)
 If Not FileExists("MeepoHelper.ini") Then Setup()
 Global $NumberOfMeepos = 1, $NumberOfMeepos
